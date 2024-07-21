@@ -16,3 +16,12 @@ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../install/ ..
 make -j
 make install
 ```
+
+
+## To use GSZ
+You can find executable binary in ```./install/bin/```.
+```
+# Format: ./gpu_api_GSZ data-you-want-to-compress relative-error-bound
+# And an example can be shown as below:
+./gpu_api_GSZ ./hacc/vx.f32 1e-4
+```
