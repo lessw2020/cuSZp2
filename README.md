@@ -4,13 +4,13 @@
 cuSZp2 (a.k.a. name as GSZ in paper submission) is a lossy error-bounded compression library specifically for NVIDIA GPUs for compression of floating-point data. This repository is used for AD-AE process for SC'24 conference. The official and final version of cuSZp2 will be updated into cuSZp repository [\[LINK\]](https://github.com/szcompressor/cuSZp) in the future. <u>For simplicity, we will still use the name **GSZ** in this repository, to align what is reported in the submission version.</u>
 
 Before we start the AD/AE process, here are some regular QAs:
-- Information about lossy compressor and HPC?
+- **Information about lossy compressor and HPC?**
   - HPC simulation, such as quantum simulation or climate simulation, turns to produce very large dataset. While lossless compression has limited compression ratio, lossy compression can achieve very high compression ratio with user tolerable errors.
-- How does lossy compressor work?
+- **How does lossy compressor work?**
   - There are two phases of a lossy compressor: **Compression** and **Decompression**. Compression takes an HPC dataset (e.g. vx.f32 from HACC dataset) as input to compress and generates the compressed HPC dataset as output. Meanwhile, decompression takes an compressed dataset as input and decomressed it to reconstructed (we can also call it decompressed) dataset as output.
-- What is GPU lossy compressor?
+- **What is GPU lossy compressor?**
   - GPU lossy compressor indicates the compression and decompression computations are executed in GPU. Why? Because GPU can do this much faster.
-- Why we propose GSZ and how to evaluate it?
+- **Why we propose GSZ and how to evaluate it?**
   - Existing GPU compressor is slow, so we propose an extremely fast GPU compressor -- GSZ. _As a result, the main contribution of GSZ is its throughput (GB/s)_, which can be understood as data processing speed. But the improved speed cannot be sacrifised from other metrics like compression ratio, _so another important metric is compression ratio, computed by the $OriDataSize/CmpDataSize$_.
 
 ## Dataset Download and Information
