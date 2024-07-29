@@ -11,7 +11,7 @@ Before we start the AD/AE process, here are some regular QAs:
 - **What is GPU lossy compressor?**
   - GPU lossy compressor indicates the compression and decompression computations are executed in GPU. Why? Because GPU can do this much faster.
 - **Why we propose GSZ and how to evaluate it?**
-  - Existing GPU compressor is slow, so we propose an extremely fast GPU compressor -- GSZ. _As a result, the main contribution of GSZ is its throughput (GB/s)_, which can be understood as data processing speed. But the improved speed cannot be sacrifised from other metrics like compression ratio, _so another important metric is compression ratio, computed by_ $OriDataSize/CmpDataSize$.
+  - Existing GPU compressor is slow, so we propose an extremely fast GPU compressor - GSZ. <u>As a result, the main contribution of GSZ is its throughput (GB/s)</u>, which can be understood as data processing speed. But the improved speed cannot be sacrifised from other metrics like compression ratio, <u>so another important metric is compression ratio, computed by</u> $OriDataSize/CmpDataSize$.
 
 ## Dataset Download and Information
 Before configuration, this section explains where can we get the evaluated HPC dataset (i.e. input of GSZ compressor) in paper and how to use them.
