@@ -53,7 +53,19 @@ When we evaluate GSZ compressor in the paper, we usually mention the compression
 However, to be honest, the compression or decompression throughput turns out to be similar for one compressor within one dataset - the reason is that the data patterns in one dataset are likely to maintain consistent across different fields.
 
 ## Align Figures in Paper with Code in This Repo
-There are 
+In this section, we will explain the most important several figures in paper (the submission version) and align which folder in this repo can reproduce them.
+- **Figure 14: Throughput Evaluation**
+  - Folder for Reproducing: ```0-main-results```
+- Table III: Compression Ratio Evaluation
+  - Folder for Reproducing: ```0-main-results```
+- Figure 19: Throughput for Double-Precision Support
+  - Folder for Reproducing: ```1-double-precision```
+- Table V: Compression Ratio for Double-Precision Support
+  - Folder for Reproducing: ```1-double-precision```
+- Figure 20: Throughput for Random Access Support
+  - Folder for Reproducing: ```2-random-access```
+- Figure 21: Throughput for Other NVIDA GPUs
+  - Folder for Reproducing: ```0-main-results```
 
 
 ## Reproducing Experimental Results
@@ -62,7 +74,7 @@ Environment Requirements
 ### Common
 - Git 2.15 or newer
 - CMake 3.21 or newer
-- Cuda Toolkit 11.2 or 11.4 (these two versions pass testing)
+- Cuda Toolkit 11.2 or 11.4 (CUDA 11.2 if preferable)
 
 ## Installation
 To build GSZ:
