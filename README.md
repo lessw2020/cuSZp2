@@ -1,7 +1,7 @@
 # SC24-cuSZp2
 
 ## Introduction
-cuSZp2 (a.k.a. name as GSZ in paper submission) is a lossy error-bounded compression library specifically for NVIDIA GPUs for compression of floating-point data. This repository is used for AD-AE process for SC'24 conference. The official and final version of cuSZp2 will be updated into cuSZp repository [\[LINK\]](https://github.com/szcompressor/cuSZp) in the future. <u>For simplicity, we will still use the name **GSZ** in this repository, to align what is reported in the submission version.</u>
+cuSZp2 (a.k.a. name as GSZ in paper submission) is a lossy error-bounded compression library specifically for NVIDIA GPUs for compression of floating-point data. This repository is used for AD-AE process for SC'24 conference. The official and final version of cuSZp2 will be updated into cuSZp repository [\[LINK\]](https://github.com/szcompressor/cuSZp) in the future. **For simplicity, we will still use the name GSZ in this repository, to align what is reported in the submission version.**
 
 Before we start the AD/AE process, here are some regular QAs:
 - **Information about lossy compressor and HPC?**
@@ -11,7 +11,7 @@ Before we start the AD/AE process, here are some regular QAs:
 - **What is GPU lossy compressor?**
   - GPU lossy compressor indicates the compression and decompression computations are executed in GPU. Why? Because GPU can do this much faster.
 - **Why we propose GSZ and how to evaluate it?**
-  - Existing GPU compressor is slow, so we propose an extremely fast GPU compressor - GSZ. <u>As a result, the main contribution of GSZ is its throughput (GB/s)</u>, which can be understood as data processing speed. But the improved speed cannot be sacrifised from other metrics like compression ratio, <u>so another important metric is compression ratio, computed by</u> $OriDataSize/CmpDataSize$.
+  - Existing GPU compressor is slow, so we propose an extremely fast GPU compressor - GSZ. **As a result, the main contribution of GSZ is its throughput (GB/s)**, which can be understood as data processing speed. But the improved speed cannot be sacrifised from other metrics like compression ratio, **so another important metric is compression ratio, computed by** $OriDataSize/CmpDataSize$.
 
 ## Dataset Download and Information
 Before configuration, this section explains where can we get the evaluated HPC dataset (i.e. input of GSZ compressor) in paper and how to use them.
@@ -49,7 +49,7 @@ Each field will be the input for a compressor, one example execution command can
 ./example_compression vx.f32
 ```
 
-When we evaluate GSZ compressor in the paper, we usually mention the compression or decompression throughput on HACC dataset (or some other datasets): <u>that means executing compression or decompression for each of the field in this dataset and gets its average</u>.
+When we evaluate GSZ compressor in the paper, we usually mention the compression or decompression throughput on HACC dataset (or some other datasets): **that means executing compression or decompression for each of the field in this dataset and gets its average**.
 However, to be honest, the compression or decompression throughput turns out to be similar for one compressor within one dataset - the reason is that the data patterns in one dataset are likely to maintain consistent across different fields.
 
 ## Align Figures in Paper with Code in This Repo
