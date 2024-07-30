@@ -1,6 +1,6 @@
 # SC24-cuSZp2
 
-## Introduction
+## 0. Introduction
 cuSZp2 (a.k.a. name as GSZ in paper submission) is a lossy error-bounded compression library specifically for NVIDIA GPUs for compression of floating-point data. This repository is used for AD-AE process for SC'24 conference. The official and final version of cuSZp2 will be updated into cuSZp repository [\[LINK\]](https://github.com/szcompressor/cuSZp) in the future. **For simplicity, we will still use the name GSZ in this repository, to align what is reported in the submission version.**
 
 Before we start the AD/AE process, here are some regular QAs:
@@ -13,7 +13,7 @@ Before we start the AD/AE process, here are some regular QAs:
 - **Why we propose GSZ and how to evaluate it?**
   - Existing GPU compressor is slow, so we propose an extremely fast GPU compressor - GSZ. **As a result, the main contribution of GSZ is its throughput (GB/s)**, which can be understood as data processing speed. But the improved speed cannot be sacrifised from other metrics like compression ratio, **so another important metric is compression ratio, computed by** $OriDataSize/CmpDataSize$.
 
-## Dataset Download and Information
+## 1. Dataset Download and Information
 Before configuration, this section explains where can we get the evaluated HPC dataset (i.e. input of GSZ compressor) in paper and how to use them.
 
 The table below includes metadata of the 9 HPC datasets are used in paper. For Suite information, SDRBench can be found here [LINK](https://sdrbench.github.io/), and Open-SciVis can be found here [LINK](https://klacansky.com/open-scivis-datasets/).
@@ -52,7 +52,7 @@ Each field will be the input for a compressor, one example execution command can
 When we evaluate GSZ compressor in the paper, we usually mention the compression or decompression throughput on HACC dataset (or some other datasets): **that means executing compression or decompression for each of the field in this dataset and gets its average**.
 However, to be honest, the compression or decompression throughput turns out to be similar for one compressor within one dataset - the reason is that the data patterns in one dataset are likely to maintain consistent across different fields.
 
-## Align Figures in Paper with Code in This Repo
+## 2. Align Figures in Paper with Code in This Repo
 In this section, we will explain the most important several figures in paper (the submission version) and align which folder in this repo can reproduce them.
 - **Figure 14: Throughput Evaluation**
   - Folder for Reproducing: ```0-main-results```
@@ -68,20 +68,20 @@ In this section, we will explain the most important several figures in paper (th
   - Folder for Reproducing: ```0-main-results```
 
 
-## Reproducing Experimental Results
+## 3. Reproducing Experimental Results
 In this section, we will guide how to reproduce the results shown in Figure/Table in paper step by step.
 We first explain the prerequisites for this section. And for each folder, we will explain:
 - How to install.
 - How to execute.
 - How to understand the output.
-### Prerequisite
+### 3.1 Prerequisite
 - A Linux Machine (we use Ubunut 20.04, but others should be fine)
 - Git 2.15 or newer
 - CMake 3.21 or newer
 - Cuda Toolkit 11.2 or 11.4 (CUDA 11.2 if preferable)
 - One NVIDIA A100 GPU (For other types, 3090 and 3080 are evaluated)
 
-### Reproducing ```0-main-results```
+### 3.2 Reproducing ```0-main-results```
 **First, build GSZ**
 ```shell
 # Step 1: Go to target folder.
@@ -123,12 +123,13 @@ Pass error check!
 - The compression end-to-end speed (i.e. throughput) reflects to the HACC bar mentioned in Figure-14-(c).
 - The decompression end-to-end speed (i.e. throughput) reflects to the HACC bar mentioned in Figure-14-(d).
 - The compression ratio is reported in Table III.
+- If you are executing those scripts in other GPUs, such as 3080 and 3080. The throughput that reported denote Figure-21.
 - The ```Pass error check!``` is the interal error bound checking script, which can be found in Line86 to Line99 in ```0-main-results/examples/gsz_p.cpp``` and ```gsz_o.cpp```.
 
 Other datasets and GSZ-O will work in the same way.
 
-### Reproducing ```1-double-precision```
+### 3.3 Reproducing ```1-double-precision```
 To be updated later.
 
-### Reproducing ```2-random-access```
+### 3.4 Reproducing ```2-random-access```
 To be updated later.
