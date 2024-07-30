@@ -30,19 +30,35 @@ The table below includes metadata of the 9 HPC datasets are used in paper. For S
 | SynTruss | Open-SciVis|    1     | [Link](https://klacansky.com/open-scivis-datasets/synthetic_truss_with_five_defects/synthetic_truss_with_five_defects_1200x1200x1200_float32.raw) |
 
 What does "#Fields" mean here? It means how many seperated snapshots are there in one dataset. We use HACC dataset as an example to explain this.
+```shell
+# Step 1: Download dataset from the link above.
+wget https://g-8d6b0.fd635.8443.data.globus.org/ds131.2/Data-Reduction-Repo/raw-data/EXASKY/HACC/EXASKY-HACC-data-big-size.tar.gz
+
+# Step 2: Decompressed the downloaded package into a folder.
+tar -xvf EXASKY-HACC-data-big-size.tar.gz
+
+# Step 3: Change directory into this folder and check.
+cd ./1billionparticles_onesnapshot
+ls
+vx.f32  vy.f32  vz.f32  xx.f32  yy.f32  zz.f32
+```
+We can see that, there are 6 files (e.g. ```vx.f32```) generated and each of them may represent one specific snapshot in the given HPC environment.
+The "6" here means 6 fields.
+Each field will be the input for a compressor, one example execution command can be shown as below.
+```shell
+./example_compression vx.f32
 ```
 
-```
-Usually But some dataset only has one field, then
+When we evaluate GSZ compressor in the paper, we usually mention the compression or decompression throughput on HACC dataset (or some other datasets): <u>that means executing compression or decompression for each of the field in this dataset and gets its average</u>.
+However, to be honest, the compression or decompression throughput turns out to be similar for one compressor within one dataset - the reason is that the data patterns in one dataset are likely to maintain consistent across different fields.
 
-## 
-explanation, which part denotes where
-Explanation about the relationship between each dataset and each figure.
+## Align Figures in Paper with Code in This Repo
+There are 
 
-## 
-compilation and experiments conducts for each step
 
-## Environment Requirements
+## Reproducing Experimental Results
+
+Environment Requirements
 ### Common
 - Git 2.15 or newer
 - CMake 3.21 or newer
