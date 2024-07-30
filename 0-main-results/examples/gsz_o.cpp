@@ -64,17 +64,17 @@ int main(int argc, char* argv[])
     // Warmup for NVIDIA GPU.
     for(int i=0; i<3; i++)
     {
-        GSZ_compress_deviceptr(d_oriData, d_cmpBytes, nbEle, &cmpSize, errorBound, stream);
+        GSZ_compress_deviceptr_outlier(d_oriData, d_cmpBytes, nbEle, &cmpSize, errorBound, stream);
     }
 
     // GSZ compression.
     timer_GPU.StartCounter(); // set timer
-    GSZ_compress_deviceptr(d_oriData, d_cmpBytes, nbEle, &cmpSize, errorBound, stream);
+    GSZ_compress_deviceptr_outlier(d_oriData, d_cmpBytes, nbEle, &cmpSize, errorBound, stream);
     float cmpTime = timer_GPU.GetCounter();
         
     // GSZ decompression.
     timer_GPU.StartCounter(); // set timer
-    GSZ_decompress_deviceptr(d_decData, d_cmpBytes, nbEle, cmpSize, errorBound, stream);
+    GSZ_decompress_deviceptr_outlier(d_decData, d_cmpBytes, nbEle, cmpSize, errorBound, stream);
     float decTime = timer_GPU.GetCounter();
 
     // Print result.

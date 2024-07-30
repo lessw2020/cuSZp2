@@ -69,28 +69,66 @@ In this section, we will explain the most important several figures in paper (th
 
 
 ## Reproducing Experimental Results
-
-Environment Requirements
-### Common
+In this section, we will guide how to reproduce the results shown in Figure/Table in paper step by step.
+We first explain the prerequisites for this section. And for each folder, we will explain:
+- How to install.
+- How to execute.
+- How to understand the output.
+### Prerequisite
+- A Linux Machine (we use Ubunut 20.04, but others should be fine)
 - Git 2.15 or newer
 - CMake 3.21 or newer
 - Cuda Toolkit 11.2 or 11.4 (CUDA 11.2 if preferable)
+- One NVIDIA A100 GPU (For other types, 3090 and 3080 are evaluated)
 
-## Installation
-To build GSZ:
-```
-mkdir build
-cd build
+### Reproducing ```0-main-results```
+**First, build GSZ**
+```shell
+# Step 1: Go to target folder.
+cd 0-main-results
+
+# Step 2: Create build folder.
+mkdir build && cd build
+
+# Step 3: Use Cmake to setup building environment.
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../install/ ..
-make -j
-make install
+
+# Step 4: Compile and install.
+make -j && make install
+```
+Then, you can see two executable binary ```gsz_p``` and ```gsz_o``` generated in folder ```0-main-results/install/bin/```. These two executable binary represent GSZ-P and GSZ-O mentioned in paper (especially for Figure 14, Table III, and Figure 21).
+
+**Second, run GSZ**
+
+Still, we use HACC dataset and GSZ-P as an example. GSZ-O will be executed in the exactly same way. Besides, since all fields in one dataset will exhibit similar throughput and consistent compression ratios, so executing one field to showcase the results and compressibility of GSZ compressor.
+
+Given an error bound ```REL 1E-3``` and field ``vx.f32``, GSZ-P can compress it by command:
+```shell
+cd 0-main-results/install/bin/
+
+./gsz_p vx.f32 1e-3 
+# 1e-3 here denotes the relative error bound;
+# you can also set it as 0.001.
+```
+After that, you can see output as below:
+```shell
+GSZ finished!
+GSZ compression   end-to-end speed: 359.554510 GB/s
+GSZ decompression end-to-end speed: 437.775719 GB/s
+GSZ compression ratio: 5.365436
+
+Pass error check!
 ```
 
+- The compression end-to-end speed (i.e. throughput) reflects to the HACC bar mentioned in Figure-14-(c).
+- The decompression end-to-end speed (i.e. throughput) reflects to the HACC bar mentioned in Figure-14-(d).
+- The compression ratio is reported in Table III.
+- The ```Pass error check!``` is the interal error bound checking script, which can be found in Line86 to Line99 in ```0-main-results/examples/gsz_p.cpp``` and ```gsz_o.cpp```.
 
-## To use GSZ
-You can find executable binary in ```./install/bin/```.
-```
-# Format: ./gpu_api_GSZ data-you-want-to-compress relative-error-bound
-# And an example can be shown as below:
-./gpu_api_GSZ ./hacc/vx.f32 1e-4
-```
+Other datasets and GSZ-O will work in the same way.
+
+### Reproducing ```1-double-precision```
+To be updated later.
+
+### Reproducing ```2-random-access```
+To be updated later.
