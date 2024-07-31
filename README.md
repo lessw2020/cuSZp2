@@ -128,7 +128,8 @@ Pass error check!
 
 Other datasets and GSZ-O will work in the same way.
 
-**Third, one command line execution**
+**Third, one command line execution (highly recommended!)**
+
 Update later this afternoon.
 
 ### 3.3 Reproducing ```1-double-precision```
