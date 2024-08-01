@@ -124,13 +124,166 @@ Pass error check!
 - The decompression end-to-end speed (i.e. throughput) reflects to the HACC bar mentioned in Figure-14-(d).
 - The compression ratio is reported in Table III.
 - If you are executing those scripts in other GPUs, such as 3080 and 3080. The throughput that reported denote Figure-21.
-- The ```Pass error check!``` is the interal error bound checking script, which can be found in Line86 to Line99 in ```0-main-results/examples/gsz_p.cpp``` and ```gsz_o.cpp```.
+- The ```Pass error check!``` is the interal error bound checking script, which can be found in Line86 to Line99 in ```0-main-results/examples/gsz_p.cpp``` and ```0-main-results/examples/gsz_o.cpp```.
 
 Other datasets and GSZ-O will work in the same way.
 
 **Third, one command line execution (highly recommended!)**
 
-Update later this afternoon.
+In this part, we can reproduce all experiments about Figure 14 and Table III with several wrap-up python (version 3+) command lines, including:
+1. Dataset prepartion.
+2. GSZ compilation.
+3. Execution and results observation. (this step can reproduce the results)
+4. Figure drawing. (if needed)
+
+The first three procedures are explained in the code block below.
+```shell
+# Step 1: Dataset preparation
+cd SC24-cuSZp2/
+python dataset-preparation.py
+# After that, all datasets will be prepared in the folder SC24-cuSZp2/dataset, and we can go to the next step (btw, this step may take some time since the dataset is large).
+
+# Step 2: GSZ compilation
+cd SC24-cuSZp2/0-main-results
+python 0-compilation.py
+# After that, the compilation of GSZ will be finished, and we can go to the next step (execution).
+
+# Step 3: GSZ execution
+cd SC24-cuSZp2/0-main-results # The same folder as Step 2.
+python 1-execution.py ERROR-BOUND-YOU-WANT-TO-EXECUTE
+# There are 3 error-bounds are used in Fig.14), so the demo input includes:
+#   python 1-execution.py 1E-2
+#   python 1-execution.py 1E-3
+#   python 1-execution.py 1E-4
+```
+
+After the execution, you can observe an output. We use ```python 1-execution.py 1E-3``` to understand such output. After that, you can see a generated output as shown in the following code block.
+```shell
+====================================================================
+Done with Execution GSZ-P and GSZ-O on cesm_atm under 1e-3
+GSZ-P   compression throughput: 267.28176896969694 GB/s
+GSZ-P decompression throughput: 395.9575038787878 GB/s
+GSZ-P    max compression ratio: 39.039537
+GSZ-P    min compression ratio: 2.776141
+GSZ-P    avg compression ratio: 14.53542281818182
+
+GSZ-O   compression throughput: 256.82364506060605 GB/s
+GSZ-O decompression throughput: 409.47252312121213 GB/s
+GSZ-O    max compression ratio: 57.453092
+GSZ-O    min compression ratio: 12.995819
+GSZ-O    avg compression ratio: 24.53496509090909
+====================================================================
+
+====================================================================
+Done with Execution GSZ-P and GSZ-O on hacc under 1e-3
+GSZ-P   compression throughput: 339.03042400000004 GB/s
+GSZ-P decompression throughput: 431.46155999999996 GB/s
+GSZ-P    max compression ratio: 5.365436
+GSZ-P    min compression ratio: 3.451861
+GSZ-P    avg compression ratio: 4.405594000000001
+
+GSZ-O   compression throughput: 344.9251053333334 GB/s
+GSZ-O decompression throughput: 459.2428156666667 GB/s
+GSZ-O    max compression ratio: 12.470066
+GSZ-O    min compression ratio: 5.851711
+GSZ-O    avg compression ratio: 8.823446833333334
+====================================================================
+
+====================================================================
+Done with Execution GSZ-P and GSZ-O on scale under 1e-3
+GSZ-P   compression throughput: 240.40884108333333 GB/s
+GSZ-P decompression throughput: 335.2613445 GB/s
+GSZ-P    max compression ratio: 72.598979
+GSZ-P    min compression ratio: 2.750328
+GSZ-P    avg compression ratio: 21.11330458333333
+
+GSZ-O   compression throughput: 250.15284741666665 GB/s
+GSZ-O decompression throughput: 316.6550965833334 GB/s
+GSZ-O    max compression ratio: 79.695224
+GSZ-O    min compression ratio: 11.102816
+GSZ-O    avg compression ratio: 29.52363491666667
+====================================================================
+
+====================================================================
+Done with Execution GSZ-P and GSZ-O on qmcpack under 1e-3
+GSZ-P   compression throughput: 236.19716549999998 GB/s
+GSZ-P decompression throughput: 315.8376475 GB/s
+GSZ-P    max compression ratio: 10.075567
+GSZ-P    min compression ratio: 6.076028
+GSZ-P    avg compression ratio: 8.0757975
+
+GSZ-O   compression throughput: 183.3123765 GB/s
+GSZ-O decompression throughput: 319.8198355 GB/s
+GSZ-O    max compression ratio: 13.296692
+GSZ-O    min compression ratio: 6.077027
+GSZ-O    avg compression ratio: 9.6868595
+====================================================================
+
+====================================================================
+Done with Execution GSZ-P and GSZ-O on nyx under 1e-3
+GSZ-P   compression throughput: 244.1977426666667 GB/s
+GSZ-P decompression throughput: 305.4707613333333 GB/s
+GSZ-P    max compression ratio: 125.551299
+GSZ-P    min compression ratio: 5.090097
+GSZ-P    avg compression ratio: 38.44212666666666
+
+GSZ-O   compression throughput: 244.53299016666665 GB/s
+GSZ-O decompression throughput: 326.64762433333334 GB/s
+GSZ-O    max compression ratio: 125.560284
+GSZ-O    min compression ratio: 10.501972
+GSZ-O    avg compression ratio: 41.756694333333336
+====================================================================
+
+====================================================================
+Done with Execution GSZ-P and GSZ-O on jetin under 1e-3
+GSZ-P   compression throughput: 559.848637 GB/s
+GSZ-P decompression throughput: 2626.161979 GB/s
+GSZ-P    max compression ratio: 119.858277
+GSZ-P    min compression ratio: 119.858277
+GSZ-P    avg compression ratio: 119.858277
+
+GSZ-O   compression throughput: 554.342144 GB/s
+GSZ-O decompression throughput: 2658.088986 GB/s
+GSZ-O    max compression ratio: 120.064674
+GSZ-O    min compression ratio: 120.064674
+GSZ-O    avg compression ratio: 120.064674
+====================================================================
+
+====================================================================
+Done with Execution GSZ-P and GSZ-O on miranda under 1e-3
+GSZ-P   compression throughput: 297.81917 GB/s
+GSZ-P decompression throughput: 420.187394 GB/s
+GSZ-P    max compression ratio: 3.038741
+GSZ-P    min compression ratio: 3.038741
+GSZ-P    avg compression ratio: 3.038741
+
+GSZ-O   compression throughput: 330.657079 GB/s
+GSZ-O decompression throughput: 423.426028 GB/s
+GSZ-O    max compression ratio: 5.981446
+GSZ-O    min compression ratio: 5.981446
+GSZ-O    avg compression ratio: 5.981446
+====================================================================
+
+====================================================================
+Done with Execution GSZ-P and GSZ-O on syntruss under 1e-3
+GSZ-P   compression throughput: 319.446766 GB/s
+GSZ-P decompression throughput: 317.919891 GB/s
+GSZ-P    max compression ratio: 6.371377
+GSZ-P    min compression ratio: 6.371377
+GSZ-P    avg compression ratio: 6.371377
+
+GSZ-O   compression throughput: 354.674088 GB/s
+GSZ-O decompression throughput: 485.769935 GB/s
+GSZ-O    max compression ratio: 6.470316
+GSZ-O    min compression ratio: 6.470316
+GSZ-O    avg compression ratio: 6.470316
+====================================================================
+```
+To understand such results.
+- "1E-3" denotes throughput results in Fig.14 (c) and (d)
+- 
+ 
+At last, we provide scripts to generate Fig.14. Note that ```gnuplot``` and ```mogrify``` are required.
 
 ### 3.3 Reproducing ```1-double-precision```
 To be updated later.
