@@ -280,13 +280,26 @@ GSZ-O    avg compression ratio: 6.470316
 ====================================================================
 ```
 To understand such results.
-- "1E-3" denotes throughput results in Fig.14 (c) and (d)
-- 
+- "1E-3" denotes throughput results in Fig.14 (c) and (d) (where as "1E-2" denote (a) and (b), "1E-4" denote (e) and (f)).
+- For the throughput, you may observe a similar number as the bar shown in Figure 14.
+- For the compression ratio, you may observe the number as reported in Table III.
+- For the baseline compressors, our evaluations are consistent with existing works [A][B]. So that they can be directly found in Figure itself.
  
 At last, we provide scripts to generate Fig.14. Note that ```gnuplot``` and ```mogrify``` are required.
+The execution can be found in the following code block.
+```shell
+cd SC24-cuSZp2/3-drawing-scripts/
+python draw.py
+```
+Then you can see the same Figure.14 generated in this folder.
+
 
 ### 3.3 Reproducing ```1-double-precision```
 To be updated later.
 
 ### 3.4 Reproducing ```2-random-access```
 To be updated later.
+
+## References
+[A] HPDC'23, FZ-GPU: A Fast and High-Ratio Lossy Compressor for Scientific Data on GPUs
+[B] SC'23, cuSZp: An Ultra-fast GPU Error-bounded Lossy Compression Framework with Optimized End-to-End Performance
