@@ -291,7 +291,7 @@ The execution can be found in the following code block.
 cd SC24-cuSZp2/3-drawing-scripts/
 python draw.py
 ```
-Then you can see the same Figure.14 generated in this folder.
+Then you can see the same Figure.14 (i.e. 6 .png files) generated in this folder.
 
 
 ### 3.3 Reproducing ```1-double-precision```
