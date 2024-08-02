@@ -81,11 +81,11 @@ We first explain the prerequisites for this section. And for each folder, we wil
 - Cuda Toolkit 11.2 or 11.4 (CUDA 11.2 if preferable)
 - One NVIDIA A100 GPU (For other types, 3090 and 3080 are evaluated)
 
-### 3.2 Reproducing ```0-main-results```
+### 3.2 Reproducing ```main-results```
 **First, build GSZ**
 ```shell
 # Step 1: Go to target folder.
-cd 0-main-results
+cd main-results
 
 # Step 2: Create build folder.
 mkdir build && cd build
@@ -96,7 +96,7 @@ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../install/ ..
 # Step 4: Compile and install.
 make -j && make install
 ```
-Then, you can see two executable binary ```gsz_p``` and ```gsz_o``` generated in folder ```0-main-results/install/bin/```. These two executable binary represent GSZ-P and GSZ-O mentioned in paper (especially for Figure 14, Table III, and Figure 21).
+Then, you can see two executable binary ```gsz_p``` and ```gsz_o``` generated in folder ```main-results/install/bin/```. These two executable binary represent GSZ-P and GSZ-O mentioned in paper (especially for Figure 14, Table III, and Figure 21).
 
 **Second, run GSZ**
 
@@ -104,7 +104,7 @@ Still, we use HACC dataset and GSZ-P as an example. GSZ-O will be executed in th
 
 Given an error bound ```REL 1E-3``` and field ``vx.f32``, GSZ-P can compress it by command:
 ```shell
-cd 0-main-results/install/bin/
+cd main-results/install/bin/
 
 ./gsz_p vx.f32 1e-3 
 # 1e-3 here denotes the relative error bound;
@@ -124,12 +124,11 @@ Pass error check!
 - The decompression end-to-end speed (i.e. throughput) reflects to the HACC bar mentioned in Figure-14-(d).
 - The compression ratio is reported in Table III.
 - If you are executing those scripts in other GPUs, such as 3080 and 3080. The throughput that reported denote Figure-21.
-- The ```Pass error check!``` is the interal error bound checking script, which can be found in Line86 to Line99 in ```0-main-results/examples/gsz_p.cpp``` and ```0-main-results/examples/gsz_o.cpp```.
+- The ```Pass error check!``` is the interal error bound checking script, which can be found in Line86 to Line99 in ```main-results/examples/gsz_p.cpp``` and ```main-results/examples/gsz_o.cpp```.
 
 Other datasets and GSZ-O will work in the same way.
 
-**Third, one command line execution (highly recommended!)**
-
+## 4. One Command Line Execution (highly recommended!)
 In this part, we can reproduce all experiments about Figure 14 and Table III with several wrap-up python (version 3+) command lines, including:
 1. Dataset prepartion.
 2. GSZ compilation.
@@ -144,12 +143,12 @@ python dataset-preparation.py
 # After that, all datasets will be prepared in the folder SC24-cuSZp2/dataset, and we can go to the next step (btw, this step may take some time since the dataset is large).
 
 # Step 2: GSZ compilation
-cd SC24-cuSZp2/0-main-results
+cd SC24-cuSZp2/main-results
 python 0-compilation.py
 # After that, the compilation of GSZ will be finished, and we can go to the next step (execution).
 
 # Step 3: GSZ execution
-cd SC24-cuSZp2/0-main-results # The same folder as Step 2.
+cd SC24-cuSZp2/main-results # The same folder as Step 2.
 python 1-execution.py ERROR-BOUND-YOU-WANT-TO-EXECUTE
 # There are 3 error-bounds are used in Fig.14), so the demo input includes:
 #   python 1-execution.py 1E-2
@@ -288,18 +287,13 @@ To understand such results.
 At last, we provide scripts to generate Fig.14. Note that ```gnuplot``` and ```mogrify``` are required.
 The execution can be found in the following code block.
 ```shell
-cd SC24-cuSZp2/3-drawing-scripts/
+cd SC24-cuSZp2/drawing-scripts/
 python draw.py
 ```
 Then you can see the same Figure.14 (i.e. 6 .png files) generated in this folder.
 
 
-### 3.3 Reproducing ```1-double-precision```
-To be updated later.
-
-### 3.4 Reproducing ```2-random-access```
-To be updated later.
-
 ## References
 [A] HPDC'23, FZ-GPU: A Fast and High-Ratio Lossy Compressor for Scientific Data on GPUs
+
 [B] SC'23, cuSZp: An Ultra-fast GPU Error-bounded Lossy Compression Framework with Optimized End-to-End Performance
