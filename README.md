@@ -68,7 +68,7 @@ In this section, we will explain the most important several figures in paper (th
   - Folder for Reproducing: ```0-main-results```
 
 
-## 3. Reproducing Experimental Results
+## 3. GSZ Execution
 In this section, we will guide how to reproduce the results shown in Figure/Table in paper step by step.
 We first explain the prerequisites for this section. And for each folder, we will explain:
 - How to install.
