@@ -55,17 +55,17 @@ However, to be honest, the compression or decompression throughput turns out to 
 ## 2. Align Figures in Paper with Code in This Repo
 In this section, we will explain the most important several figures in paper (the submission version) and align which folder in this repo can reproduce them.
 - **Figure 14: Throughput Evaluation**
-  - Folder for Reproducing: ```0-main-results```
+  - Folder for Reproducing: ```main-results``` (core resutls)
 - Table III: Compression Ratio Evaluation
-  - Folder for Reproducing: ```0-main-results```
+  - Folder for Reproducing: ```main-results``` (core resutls)
 - Figure 19: Throughput for Double-Precision Support
-  - Folder for Reproducing: ```1-double-precision```
+  - Folder for Reproducing: ```double-precision``` (to be updated if needed)
 - Table V: Compression Ratio for Double-Precision Support
-  - Folder for Reproducing: ```1-double-precision```
+  - Folder for Reproducing: ```double-precision``` (to be updated if needed)
 - Figure 20: Throughput for Random Access Support
-  - Folder for Reproducing: ```2-random-access```
+  - Folder for Reproducing: ```random-access``` (to be updated if needed)
 - Figure 21: Throughput for Other NVIDA GPUs
-  - Folder for Reproducing: ```0-main-results```
+  - Folder for Reproducing: ```main-results```
 
 
 ## 3. GSZ Execution
@@ -291,6 +291,69 @@ cd SC24-cuSZp2/drawing-scripts/
 python draw.py
 ```
 Then you can see the same Figure.14 (i.e. 6 .png files) generated in this folder.
+
+## 5. One Command Line Execution for RTM dataset
+In this part, we can reproduce all experiments related to RTM dataset within just several scripts. 
+Note that the link to this dataset is not directly provided in this repository due to confidential issues -- it can be only accessed in the AD-AE discussion internally.
+Assuming we already have our datasets, the execution step of this phase includes:
+1. GSZ compilation.
+2. Execution and results observation. (this step can reproduce the results about throughput and compression ratio in Figure.14 and Table.III)
+
+Data quality is optional. Since this paper mainly focuses on throughput and compression ratio. This step can reproduce results in Figure.18. In the meanwhile, we provide data quality evaluation scripts in *3-visualization.py*.
+
+Since RTM dataset only has three fields: **pressure_1000**, **pressure_2000**, and **pressure_3000**, the datasets preparation steps are described in text below.
+In all, the execution to reproduce all experiments are shown as the code block below.
+```shell
+# Step 0: Dataset preparation
+cd SC24-cuSZp2/rtm-evaluation-results/
+# Download pressure_1000, pressure_2000, and pressure_3000 manually from Google Drive.
+# After that, when you list all files in this folder, all files should be arranged as below.
+ls
+1-compilation.py  2-execution.py  3-visualization.py  cmake  CMakeLists.txt  Config.cmake.in  examples  include  pressure_1000  pressure_2000  pressure_3000  src
+
+# Step 1: GSZ compilation (in the same folder as Step 0)
+python 1-compilation.py
+# After that, the compilation of GSZ will be finished, and we can go to the next step (execution).
+
+# Step 3: GSZ execution (in the same folder as Step 0)
+python 2-execution.py
+# After that, both GSZ-P and GSZ-O compression will be conducted under the error bound 1E-2, 1E-3, and 1E-4.
+```
+
+After the execution, results similar to the below code block shown can be seen.
+```shell
+=====================================
+GSZ-O 1E-3 Execution on Pressure_1000
+=====================================
+GSZ finished!
+GSZ compression   end-to-end speed: 469.758409 GB/s
+GSZ decompression end-to-end speed: 1146.214499 GB/s
+GSZ compression ratio: 84.968878
+
+Pass error check!
+
+=====================================
+GSZ-O 1E-3 Execution on Pressure_2000
+=====================================
+GSZ finished!
+GSZ compression   end-to-end speed: 399.663872 GB/s
+GSZ decompression end-to-end speed: 625.772303 GB/s
+GSZ compression ratio: 23.767280
+
+Pass error check!
+
+=====================================
+GSZ-O 1E-3 Execution on Pressure_3000
+=====================================
+GSZ finished!
+GSZ compression   end-to-end speed: 336.690098 GB/s
+GSZ decompression end-to-end speed: 464.315184 GB/s
+GSZ compression ratio: 12.002271
+
+Pass error check!
+```
+
+## 6. One Command Line Execution for Double-Precision Dataset Evaluation.
 
 
 ## References
