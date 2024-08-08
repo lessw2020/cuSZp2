@@ -354,6 +354,65 @@ Pass error check!
 ```
 
 ## 6. One Command Line Execution for Double-Precision Dataset Evaluation.
+In this part, we can reproduce all experiments related to double-precision dataset within just several scripts. 
+Note that the data preparation step may take sometime, since S3D dataset is more than 50 GB and downloading it may take some time.
+All scripts executed in python is still under python 3.0+.
+Specifically, the scripts includes:
+1. Dataset prepartion.
+2. GSZ compilation.
+3. Execution and results observation. (this step can reproduce the results)
+
+The first three procedures are explained in the code block below.
+```shell
+# Step 1: Dataset preparation
+cd SC24-cuSZp2/double-precision-results
+python 0-dataset-preparation.py
+# This step may take some time, since s3d dataset is more than 50 GB.
+
+# Step 2: GSZ compilation
+python 1-compilation.py
+# After that, the compilation of GSZ will be finished, and we can go to the next step (execution).
+
+# Step 3: GSZ execution
+python 2-execution.py ERROR-BOUND-YOU-WANT-TO-EXECUTE
+# There are 3 error-bounds, so the demo input includes:
+#   python 2-execution.py 1E-2
+#   python 2-execution.py 1E-3
+#   python 2-execution.py 1E-4
+```
+
+After the execution, you can observe an output. We use ```python 2-execution.py 1E-2``` to understand such output. After that, you can see a generated output as shown in the following code block.
+```shell
+====================================================================
+Done with Execution GSZ-P and GSZ-O on nwchem under 1e-2
+GSZ-P   compression throughput: 652.95619 GB/s
+GSZ-P decompression throughput: 2350.036331 GB/s
+GSZ-P    max compression ratio: 82.506696
+GSZ-P    min compression ratio: 82.506696
+GSZ-P    avg compression ratio: 82.506696
+
+GSZ-O   compression throughput: 656.172996 GB/s
+GSZ-O decompression throughput: 2326.732979 GB/s
+GSZ-O    max compression ratio: 82.51842
+GSZ-O    min compression ratio: 82.51842
+GSZ-O    avg compression ratio: 82.51842
+====================================================================
+
+====================================================================
+Done with Execution GSZ-P and GSZ-O on s3d under 1e-2
+GSZ-P   compression throughput: 678.3954736 GB/s
+GSZ-P decompression throughput: 1221.6985906 GB/s
+GSZ-P    max compression ratio: 44.289605
+GSZ-P    min compression ratio: 44.273392
+GSZ-P    avg compression ratio: 44.2824034
+
+GSZ-O   compression throughput: 712.9922364 GB/s
+GSZ-O decompression throughput: 1318.336099 GB/s
+GSZ-O    max compression ratio: 90.287397
+GSZ-O    min compression ratio: 89.566029
+GSZ-O    avg compression ratio: 89.8573926
+====================================================================
+```
 
 
 ## References
