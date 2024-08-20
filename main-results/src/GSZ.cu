@@ -3,30 +3,44 @@
 
 __device__ inline int quantization(float data, float recipPrecision)
 {
-    int result;
-    asm("{\n\t"
-        ".reg .f32 dataRecip;\n\t"
-        ".reg .f32 temp1;\n\t"
-        ".reg .s32 s;\n\t"
-        ".reg .pred p;\n\t"
-        "mul.f32 dataRecip, %1, %2;\n\t"        // dataRecip = data * recipPrecision
-        "setp.ge.f32 p, dataRecip, -0.5;\n\t"   // Set predicate if dataRecip >= -0.5
-        "selp.s32 s, 0, 1, p;\n\t"              // s = 0 if p is true, else s = 1
-        "add.f32 temp1, dataRecip, 0.5;\n\t"    // temp1 = dataRecip + 0.5
-        "cvt.rzi.s32.f32 %0, temp1;\n\t"        // Convert to int with round towards zero and store to result
-        "sub.s32 %0, %0, s;\n\t"                // result = result - s
-        "}": "=r"(result) : "f"(data), "f"(recipPrecision)
-    );
-    return result;
+    float dataRecip = data*recipPrecision;
+    int s = dataRecip>=-0.5f?0:1;
+    return (int)(dataRecip+0.5f) - s;
 }
 
 
 __device__ inline int get_bit_num(unsigned int x)
 {
-    int leading_zeros;
-    asm("clz.b32 %0, %1;" : "=r"(leading_zeros) : "r"(x));
-    return 32 - leading_zeros;
+    return (sizeof(unsigned int)*8) - __clz(x);
 }
+
+
+// __device__ inline int quantization(float data, float recipPrecision)
+// {
+//     int result;
+//     asm("{\n\t"
+//         ".reg .f32 dataRecip;\n\t"
+//         ".reg .f32 temp1;\n\t"
+//         ".reg .s32 s;\n\t"
+//         ".reg .pred p;\n\t"
+//         "mul.f32 dataRecip, %1, %2;\n\t"        // dataRecip = data * recipPrecision
+//         "setp.ge.f32 p, dataRecip, -0.5;\n\t"   // Set predicate if dataRecip >= -0.5
+//         "selp.s32 s, 0, 1, p;\n\t"              // s = 0 if p is true, else s = 1
+//         "add.f32 temp1, dataRecip, 0.5;\n\t"    // temp1 = dataRecip + 0.5
+//         "cvt.rzi.s32.f32 %0, temp1;\n\t"        // Convert to int with round towards zero and store to result
+//         "sub.s32 %0, %0, s;\n\t"                // result = result - s
+//         "}": "=r"(result) : "f"(data), "f"(recipPrecision)
+//     );
+//     return result;
+// }
+
+
+// __device__ inline int get_bit_num(unsigned int x)
+// {
+//     int leading_zeros;
+//     asm("clz.b32 %0, %1;" : "=r"(leading_zeros) : "r"(x));
+//     return 32 - leading_zeros;
+// }
 
 
 __global__ void GSZ_compress_kernel_outlier(const float* const __restrict__ oriData, 
@@ -1833,18 +1847,4 @@ __global__ void GSZ_decompress_kernel_plain(float* const __restrict__ decData,
         // Index updating across different iterations.
         cur_byte_ofs += __shfl_sync(0xffffffff, tmp_byte_ofs, 31);
     }
-}
-
-
-__device__ inline int quantization_src_backup(float data, float recipPrecision)
-{
-    float dataRecip = data*recipPrecision;
-    int s = dataRecip>=-0.5f?0:1;
-    return (int)(dataRecip+0.5f) - s;
-}
-
-
-__device__ inline int get_bit_num_src_backup(unsigned int x)
-{
-    return (sizeof(unsigned int)*8) - __clz(x);
 }
